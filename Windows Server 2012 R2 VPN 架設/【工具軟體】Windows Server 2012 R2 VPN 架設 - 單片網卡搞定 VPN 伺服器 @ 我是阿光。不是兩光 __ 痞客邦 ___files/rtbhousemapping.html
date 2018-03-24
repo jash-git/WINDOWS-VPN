@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://cdn.doublemax.net/js/rtbhouse/rtbhousemapping.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title></title>
+</head>
+<body>
+<script>
+var kvalues=[];(function(){try{var group="F7HElL9HGG4uutaqPwUg";var lsKey="rtb_"+group;var xhr=new XMLHttpRequest();if(!("withCredentials" in xhr)){return}xhr.withCredentials=true;xhr.open("GET","https://pubs2-asia.creativecdn.com/bidder/pubs/tagging?type=json&group="+group);xhr.onload=function(){try{var json=JSON.parse(xhr.responseText);json._ts=new Date().getTime();localStorage.setItem(lsKey,JSON.stringify(json))}catch(e){}};xhr.send();var json=localStorage.getItem(lsKey);if(json){json=JSON.parse(json);for(var i=0;i<json.deals.length;i++){var deal=json.deals[i];if(!deal.ttl||new Date().getTime()<json._ts+deal.ttl){kvalues.push(deal.hash)}}}}catch(e){}var bodies=document.getElementsByTagName("body");var img=document.createElement("img");img.width=0;img.height=0;img.style.display="none";img.async=true;img.src="//clg.doublemax.net/adserver/rtbHouse/setCookie?rhtg_rta_clickforce="+encodeURI(kvalues)+"&expired=86400";if(bodies.length>0){bodies[0].appendChild(img)}})();
+</script><img width="0" height="0" src="./setCookie" style="display: none;">
+
+</body></html>

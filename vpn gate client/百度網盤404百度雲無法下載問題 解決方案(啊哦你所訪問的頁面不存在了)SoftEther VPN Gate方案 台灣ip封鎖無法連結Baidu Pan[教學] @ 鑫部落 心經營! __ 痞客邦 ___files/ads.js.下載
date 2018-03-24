@@ -1,0 +1,125 @@
+
+					var isDfad;
+					var isLazyLoadActive = false;
+					var winBider = null;
+					var fljson = {"cpm":0,"bider":"clickforce","tag":"var w = 468, h = 60, crt = \"https:\/\/falcon.pixanalytics.com\/ad\/embed\/1805\", zi=\"%%ZONE_ID%%\";\n(function() { var j = document.createElement('script'); j.src = \"\/\/cdn.doublemax.net\/js\/tmp1\/30.js\"; document.body.appendChild(j); })();self.frameElement.width=468;self.frameElement.height=60;"};
+					var flWithTp = false;
+					var zoneLazyLoad = 0;
+					if(typeof(fbList) != "undefined"){
+						flWithTp = true;
+						fbList[fbList.length] = fljson;
+					
+						setTimeout(function(){
+							crtCheck = true;
+						    var winCpm = 0;
+						    var thirdPartyCheckCpm = 0.2592;
+						   	var thirdPartyConfig = {"criteo":{"price_compare":"0"},"xaxis":{"price_compare":"0"}};		
+						    for (var i = 0; i < fbList.length; i++) {
+						    	if(typeof(fbList[i]) != "undefined" && typeof(fbList[i].cpm)  != "undefined"){
+						    		if(fbList[i].cpm >= winCpm){
+						    			if(fbList[i].bider == "clickforce"){
+							    			winCpm = fbList[i].cpm;
+							    			winBider = fbList[i];
+						    			}else{
+						    				if(typeof(thirdPartyConfig[fbList[i].bider]) != "undefined"){
+
+						    					var tpCheckCpm = thirdPartyCheckCpm
+						    					if(fbList[i].bider == "criteo"){
+						    						if(typeof(thirdPartyConfig["criteo"]["price_compare"]) != "undefined"){
+						    							if(thirdPartyConfig["criteo"]["price_compare"] == 0){
+						    								tpCheckCpm = 0;
+						    							}
+						    						}
+						    					}
+
+						    					if(fbList[i].bider == "xaxis"){
+						    						if(typeof(thirdPartyConfig["xaxis"]["price_compare"]) != "undefined"){
+						    							if(thirdPartyConfig["xaxis"]["price_compare"] == 0){
+						    								tpCheckCpm = 0;
+						    							}
+						    						}
+						    					}
+
+							    				if(fbList[i].cpm > tpCheckCpm){
+									    			winCpm = fbList[i].cpm;
+									    			winBider = fbList[i];
+							    				}						    						
+						    				}
+						    			}
+						    		}
+						    	}
+						    }
+				    		flWithTp = true;
+				    		setTimeout(function(){
+				    			if(typeof(avJsVer) == "undefined"){
+				    				cfLazyload();
+				    			}
+				    		}, 350);						    
+						}, 800);
+					}else{
+						winBider = fljson;
+			    		setTimeout(function(){
+			    			if(typeof(avJsVer) == "undefined"){
+			    				cfLazyload();
+			    			}
+			    		}, 350);							
+					}
+
+					function cfLazyload(){
+						if(crtCheck == true){
+							if(isLazyLoadActive == false && winBider != null){
+								isLazyLoadActive = true;
+
+								if(winBider.bider == "clickforce"){
+									var script = document.createElement("script");
+									script.type = "text/javascript";
+									script.innerHTML = winBider.tag;
+									document.getElementsByTagName("head")[0].appendChild(script);
+								}else{
+									var k = document.createElement("iframe");
+									k.src = "about:blank";
+									k.setAttribute("class", "cftpif");
+									k.setAttribute("id", "cftpif");
+									k.setAttribute("width", 468);
+									k.setAttribute("height", 60);
+									k.setAttribute("scrolling", "no");
+									k.setAttribute("marginheight", "0");
+									k.setAttribute("marginwidth", "0");
+									k.setAttribute("allowtransparency", "true");
+									k.setAttribute("vspace", 0);
+									k.setAttribute("hspace", 0);
+									k.setAttribute("frameborder", 0);
+									document.body.appendChild(k);
+				                    k.contentDocument.write(winBider.tag);
+				                    k.contentDocument.close();															
+								}
+							    
+							    if(typeof(avJsVer) != "undefined" && avJsVer == 1228){
+								    setTimeout(function(){
+								    	initActiveView();	
+								    }, 200);
+								}
+
+								if(flWithTp == true){
+									setTimeout(function(){
+										if(typeof(winBider.impTag)  != "undefined"){
+											parent.c_tag_mk("img", winBider.impTag + "&p=2e8c4f2cfb7022bf2beea227342cdc15-2255&t=1521621435",false);
+										}
+									}, 500);
+								}
+							}
+						}else{
+							setTimeout(function(){
+								cfLazyload();
+							}, 300);							
+						}	
+					}
+
+
+					self.frameElement.width = 468;
+					self.frameElement.height = 60;
+					var sc = document.createElement("script");
+					sc.src = "//cdn.doublemax.net/js/av.js";
+					document.body.appendChild(sc);
+
+					

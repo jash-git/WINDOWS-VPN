@@ -1,0 +1,75 @@
+var apxTag = window.apxTag || {};
+apxTag.cmd = apxTag.cmd || [];
+apxTag.data = apxTag.data || {};
+apxTag.data.zones = apxTag.data.zones || {};
+apxTag.data.zones['Whue9301'] = apxTag.data.zones['Whue9301'] || {};
+
+try {
+    if(!apxTag.init) {
+        var headerCode = document.createElement('SCRIPT');
+        headerCode.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'apn.c.appier.net/pb/0wHT9JDiP3SORJx/pb.js?haid=WUC9fofa';
+        document.getElementsByTagName('head')[0].appendChild(headerCode);
+        apxTag.init = true;
+    }
+} catch(e) {
+}
+
+(function () {
+    var divid = 'apxzone_Whue9301';
+    var zone = apxTag.data.zones['Whue9301'];
+    if(!zone.onMessage) {
+        zone.onMessage = function (event) {
+            var creativeOrigin = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'crt.adnw.xyz';
+            var passbackOrigin = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.adnw.xyz';
+            if (event.origin !== creativeOrigin && event.origin !== passbackOrigin) { return; }
+            var parseData = JSON.parse(event.data);
+            if (parseData['event'] === 'onAdClicked' && parseData['zone'] === 'Whue9301') {
+                if (typeof zone.onAdClicked !== 'undefined') {
+                    setTimeout(function() {
+                        zone.onAdClicked();
+                    }, 0);
+                }
+            }
+        };
+        var addEvent =  window.attachEvent || window.addEventListener;
+        var messageEvent = window.attachEvent ? 'onmessage' : 'message';
+        addEvent(messageEvent, zone.onMessage, false);
+    }
+
+    var showPassback = function () {
+        if (typeof zone.onRegisterPassback !== 'undefined') {
+            setTimeout(function() {
+                zone.registerPassback();
+            }, 0);
+        } 
+    };
+
+    try {
+        var newScript = document.createElement('SCRIPT');
+        newScript.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'apn.c.appier.net/pb/0wHT9JDiP3SORJx/zone.js?hzid=Whue9301';
+        newScript.onerror = function () {
+            new Image().src = '//log.apx.appier.net/log?msg=zoneOnError&divid=apxzone_Whue9301';
+            if (typeof zone.onError !== 'undefined') {
+                setTimeout(function() {
+                    zone.onError();
+                }, 0);
+            }
+            showPassback();
+        };
+        document.getElementById(divid).parentNode.insertBefore(newScript, document.getElementById(divid));
+        var testScript = document.createElement('SCRIPT');
+        testScript.src = 'https://cdn.adnw.xyz/pb/beacon.js';
+        testScript.onerror = function () {   
+            new Image().src = '//log.apx.appier.net/log?msg=beaconOnError&divid=apxzone_Whue9301';
+        };
+        document.getElementById(divid).parentNode.insertBefore(testScript, document.getElementById(divid));
+    } catch (err) {
+        new Image().src = '//log.apx.appier.net/log?msg=zoneOnException&divid=apxzone_Whue9301&errorName=' + encodeURIComponent(err.name) + '&errorMessage=' + encodeURIComponent(err.message);
+        if (typeof zone.onError !== 'undefined') {
+            setTimeout(function() {
+                zone.onError();
+            }, 0);
+        }
+        showPassback();
+    }
+})();

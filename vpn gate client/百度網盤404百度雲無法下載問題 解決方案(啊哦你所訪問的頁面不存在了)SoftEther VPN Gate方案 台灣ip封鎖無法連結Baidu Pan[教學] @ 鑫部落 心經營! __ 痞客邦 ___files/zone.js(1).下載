@@ -1,0 +1,126 @@
+var apxTag = window.apxTag || {};
+apxTag.cmd = apxTag.cmd || [];
+apxTag.data = apxTag.data || {};
+
+(function(){
+  apxTag.data.zones = apxTag.data.zones || {};
+  var zone = apxTag.data.zones["Whu69301"] || {};
+
+  var getCookie = function(cname) {
+    var name = cname + '=';
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var co = decodedCookie.split(';');
+    for (var i = 0; i < co.length; i++) {
+      var c = co[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c && c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return undefined;
+  };
+
+  var createXMLHttpRequest = function() {
+    var xmlHttp = null;
+    if (typeof XDomainRequest !== 'undefined' && window.FormData === undefined) {
+      return new XDomainRequest();
+    } else if (typeof XMLHttpRequest !== 'undefined') {
+      xmlHttp = new XMLHttpRequest();
+    } else {
+      return null;
+    }
+    return xmlHttp;
+  };
+
+  var add_ads_iframe = function(divid, ads_iframe_url, ads_iframe_html){
+    var iframe = document.createElement('iframe');
+    var div = document.getElementById(divid);
+    iframe.width = "728";
+    iframe.height = "90";
+    iframe.style.border = 'none';
+    iframe.style.overflow = 'hidden';
+    iframe.marginheight = 0;
+    iframe.marginwidth = 0;
+    iframe.frameBorder = 0;
+    iframe.scrolling = 'no';
+
+    div.appendChild(iframe);
+
+    if(ads_iframe_url) {
+      iframe.src = ads_iframe_url;
+    } else {
+      var fw = (iframe.contentWindow || iframe.contentDocument);
+      fw.document.open();
+      fw.document.write(ads_iframe_html);
+      fw.document.close();      
+    }
+  };
+
+  var showPassback = function(divid){
+    var passback_url = ('https:' == document.location.protocol ? 'https://' : 'http://') + "cdn.adnw.xyz/pb/Whu69301/passback.html";
+    if (typeof zone.registerPassback !== 'undefined') {
+        setTimeout(function() {
+          zone.registerPassback();
+        }, 0);
+    } else {
+        var xhr = createXMLHttpRequest();
+        xhr.onload = function() {
+          add_ads_iframe(divid, null, xhr.responseText)
+          if (typeof zone.onPassback !== 'undefined') {
+              setTimeout(function() {
+                zone.onPassback();
+              }, 0);
+          }
+        }
+        xhr.open('GET', passback_url);
+        xhr.send();
+    }
+  };
+
+  var sendLog = function(msg) {
+    try{
+      var xhr = createXMLHttpRequest();
+      var log_url = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'log.apx.appier.net/log?msg=' + encodeURIComponent(msg);
+      xhr.open('GET', log_url);
+    } catch(err) {
+    }
+  };
+
+  var showCreative = function(divid, cid, crid) {
+    var creative_url = ('https:' == document.location.protocol ? 'https://' : 'http://') + "crt.adnw.xyz/pb/0wHT9JDiP3SORJx/show?hzid=Whu69301&cid=" + cid + "&crid=" + crid + "&apx_info=Dj1K8XSYDqcBZ6DxQ4-98WfUqmvNH9tjKzmJzHkgZIpOQbcwSoQUxGzEkw8Acu0AYpAX5vQ8PWAhndFOuvp-WbKJsgE3ean3fcOHbJdGnm6&bi=xqWFsQWwBGiW2HIk0B6yWg";
+    add_ads_iframe(divid, creative_url, null);
+
+    if (typeof zone.onAdLoaded !== 'undefined') {
+        setTimeout(function() {
+          sendLog("showCreativeAjax: " + divid + ",bi: xqWFsQWwBGiW2HIk0B6yWg");
+          new Image().src = "//log.apx.appier.net/log?msg=showCreativeSrc&divid=" + divid + "&bi=xqWFsQWwBGiW2HIk0B6yWg";
+          zone.onAdLoaded();
+        }, 0);
+    }
+  };
+
+  var divid = "apxzone_Whu69301";
+  try {
+    var cid_crid_cookie = getCookie("apxz_Whu69301") || '';
+    var cid_cookie = '';
+    var crid_cookie = '';
+    if(cid_crid_cookie){
+      var cid_crid = cid_crid_cookie.split('|');
+      if(cid_crid.length === 2){
+        cid_cookie = cid_crid[0];
+        crid_cookie = cid_crid[1];
+      }
+    }
+    var cid = zone.cid || "" || cid_cookie ;
+    var crid = zone.crid || "" || crid_cookie;
+    if(cid && crid){
+      showCreative(divid, cid, crid);
+    }else{
+      showPassback(divid);
+    }
+  } catch(err) {
+    showPassback(divid);
+  }
+})();
